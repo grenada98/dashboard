@@ -53,7 +53,6 @@ export const Pagination = () => {
             document.getElementsByClassName('window__pagination-button')[i].classList.remove("active");
         }
         e.target.classList.add("active");
-        console.log(e.target.innerText);
         setCurrent(parseInt(e.target.innerText));
     }
     return(
@@ -63,16 +62,9 @@ export const Pagination = () => {
             </button>
             {
                 pag.map((item, i)=>{
-                    //console.log("item" + item + " i " + i + ' current ' + current);
                     return <button key={i} className={item==current?"window__pagination-button active": "window__pagination-button"} onClick={setActive}>{item}</button>
                 })
             }
-            {/* <button className="window__pagination-button">1</button>
-            <button className="window__pagination-button active">2</button>
-            <button className="window__pagination-button">3</button>
-            <button className="window__pagination-button">4</button>
-            <div className="window__pagination-button middle">...</div>
-            <button className="window__pagination-button">40</button> */}
             <button className="window__pagination-button-next" onClick={paginationHandleRight}>
                 <Arrow className="window__arrow-right"/>
             </button>

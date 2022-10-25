@@ -10,7 +10,6 @@ export const SideList = (props) => {
     useEffect(()=>{
     }, [props.category])
     function onHandle(e, item){
-        console.log("Now is " + item);
         for(let i = 0; i < document.getElementsByClassName('sidemenu__menu-item').length; i++){
             if(document.getElementsByClassName('sidemenu__menu-item')[i].classList.contains("active")){
                 document.getElementsByClassName('sidemenu__menu-item')[i].classList.remove("active");
