@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import {Sidemenu} from './components/Sidemenu';
+import {MainWindow} from './components/MainWindow';
+import { useEffect, useState} from 'react';
 
 function App() {
+  const [sideMenu, setSideMenu] = useState(false);
+  const [category, setCategory] = useState("Customers");
+  useEffect(()=>{
+
+  }, [sideMenu]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className={sideMenu? 'blocking active': 'blocking'}></div>
+      <Sidemenu category={category} setCategory={setCategory} sideMenu={sideMenu} setSideMenu={setSideMenu}/>
+      <MainWindow category={category} setCategory={setCategory} sideMenu={sideMenu} setSideMenu={setSideMenu}/>
     </div>
   );
 }
