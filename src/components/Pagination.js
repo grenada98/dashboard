@@ -1,50 +1,46 @@
 import React, { useEffect, useState } from "react";
 import {ReactComponent as Arrow} from "../arrow.svg";
 
-export const Pagination = () => {
-    const [pag, setPag] = useState([1, 2, 3, 4, 5, 6, 7, 8,]);
-    const [current, setCurrent] = useState(1);
-    const [pagsize, setPagsize] = useState(pag.length);
-    const [maxCountData, setMaxCountData] = useState(37);
+export const Pagination = (props) => {
     useEffect(()=>{
-    }, [pag, current]);
+    }, [props.pag, props.current]);
     function paginationHandleRight(){
-        if(current===maxCountData){
-            setCurrent(current);
+        if(props.current===props.maxCountData){
+            props.setCurrent(props.current);
         }
         else{
-            if(pag[pag.length - 1]<current + 1){
-                setPag(pag.map((item)=>(item + pagsize)).filter((item)=>item <= maxCountData));
-                setCurrent(current + 1);
+            if(props.pag[props.pag.length - 1]<props.current + 1){
+                props.setPag(props.pag.map((item)=>(item + props.pagsize)).filter((item)=>item <= props.maxCountData));
+                props.setCurrent(props.current + 1);
 
             }
             else{
-                setCurrent(current + 1);
+                props.setCurrent(props.current + 1);
             }
         }
     }
     function paginationHandleLeft(){
-        if(current===1){
-            setCurrent(current);
+        if(props.current===1){
+            props.setCurrent(props.current);
         }
         else{
-            if(pag[0]>current - 1){
-                if(pagsize==pag.length){
-                    setPag(pag.map((item)=>(item - pagsize)));
-                    setCurrent(current - 1);
+            if(props.pag[0]>props.current - 1){
+                if(props.pagsize==props.pag.length){
+                    props.setPag(props.pag.map((item)=>(item - props.pagsize)));
+                    props.setCurrent(props.current - 1);
                 }
                 else{
                     let temp = [];
-                    temp.push(...pag);
-                    for(let i = 1; i <= pagsize - pag.length; i++){
-                        temp.push(pag[pag.length - 1] + i);
+                    temp.push(...props.pag);
+                    for(let i = 1; i <= props.pagsize - props.pag.length; i++){
+                        temp.push(props.pag[props.pag.length - 1] + i);
                     }
-                    setPag(temp.map((item) => (item - pagsize)));
-                    setCurrent(current - 1);
+                    props.setPag(temp.map((item) => (item - props.pagsize)));
+                    props.setCurrent(props.current - 1);
                 }
             }
             else{
-                setCurrent(current - 1);
+                props.setCurrent(props.current - 1);
             }
         }
     }
@@ -53,7 +49,7 @@ export const Pagination = () => {
             document.getElementsByClassName('window__pagination-button')[i].classList.remove("active");
         }
         e.target.classList.add("active");
-        setCurrent(parseInt(e.target.innerText));
+        props.setCurrent(parseInt(e.target.innerText));
     }
     return(
         <div className="window__pagination">
@@ -61,8 +57,8 @@ export const Pagination = () => {
                 <Arrow className="window__arrow-left"/>
             </button>
             {
-                pag.map((item, i)=>{
-                    return <button key={i} className={item==current?"window__pagination-button active": "window__pagination-button"} onClick={setActive}>{item}</button>
+                props.pag.map((item, i)=>{
+                    return <button key={i} className={item==props.current?"window__pagination-button active": "window__pagination-button"} onClick={setActive}>{item}</button>
                 })
             }
             <button className="window__pagination-button-next" onClick={paginationHandleRight}>

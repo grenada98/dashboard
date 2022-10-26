@@ -1,11 +1,46 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { ReactComponent as Search } from "../search.svg";
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { Burger } from "./Burger";
 import { Pagination } from "./Pagination";
+import { TableData } from "./TableData";
 
 export const MainWindow = (props) => {
+    const [pag, setPag] = useState([1, 2, 3, 4, 5, 6, 7, 8,]);
+    const [current, setCurrent] = useState(1);
+    const [pagsize, setPagsize] = useState(pag.length);
+    const [maxCountData, setMaxCountData] = useState(12);
+    const [data, setData] = useState([]);
+    useEffect(()=>{
+        const url = `https://dummyjson.com/users?limit=8`;
+    
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url);
+                const json = await response.json();
+                setData([...json.users]);
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+    
+        fetchData();
+      }, [])
+    useEffect(()=>{
+        const url = `https://dummyjson.com/users?limit=${pagsize}&skip=${8*current}`;
+
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url);
+                const json = await response.json();
+                setData([...json.users]);
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+
+        fetchData();
+    }, [current])
     return(
         <div className="main-wrapper">
             <div className="header">
@@ -23,123 +58,10 @@ export const MainWindow = (props) => {
                         <input placeholder="Search"></input>
                     </div>
                 </div>
-                <Table withbasestyles={{breakpoint: '45em'}}  className="window__information-table">
-                    <Thead>
-                        <Tr className="window__information-table-header">
-                            <Th>Customer Name</Th>
-                            <Th>Company</Th>
-                            <Th>Phone Number</Th>
-                            <Th>Email</Th>
-                            <Th>Country</Th>
-                            <Th>Status</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        <Tr>
-                            <Td>Jane Cooper</Td>
-                            <Td>Microsoft</Td>
-                            <Td>(225) 555-0118</Td>
-                            <Td>jane@microsoft.com</Td>
-                            <Td>United States</Td>
-                            <Td><div className="status active">Active</div></Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Jane Cooper</Td>
-                            <Td>Microsoft</Td>
-                            <Td>(225) 555-0118</Td>
-                            <Td>jane@microsoft.com</Td>
-                            <Td>United States</Td>
-                            <Td><div className="status">Inactive</div></Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Jane Cooper</Td>
-                            <Td>Microsoft</Td>
-                            <Td>(225) 555-0118</Td>
-                            <Td>jane@microsoft.com</Td>
-                            <Td>United States</Td>
-                            <Td><div className="status active">Active</div></Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Jane Cooper</Td>
-                            <Td>Microsoft</Td>
-                            <Td>(225) 555-0118</Td>
-                            <Td>jane@microsoft.com</Td>
-                            <Td>United States</Td>
-                            <Td><div className="status">Inactive</div></Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Jane Cooper</Td>
-                            <Td>Microsoft</Td>
-                            <Td>(225) 555-0118</Td>
-                            <Td>jane@microsoft.com</Td>
-                            <Td>United States</Td>
-                            <Td><div className="status active">Active</div></Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Jane Cooper</Td>
-                            <Td>Microsoft</Td>
-                            <Td>(225) 555-0118</Td>
-                            <Td>jane@microsoft.com</Td>
-                            <Td>United States</Td>
-                            <Td><div className="status">Inactive</div></Td>
-                        </Tr>
-                    </Tbody>
-                </Table>
-                {/* <table className="window__information-table">
-                    <tbody>
-                        <tr className="window__information-table-header">
-                            <th>Customer Name</th>
-                            <th>Company</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
-                            <th>Country</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr>
-                            <td>Jane Cooper</td>
-                            <td>Microsoft</td>
-                            <td>(225) 555-0118</td>
-                            <td>jane@microsoft.com</td>
-                            <td>United States</td>
-                            <td><div className="status active">Active</div></td>
-                        </tr>
-                        <tr>
-                            <td>Jane Cooper</td>
-                            <td>Microsoft</td>
-                            <td>(225) 555-0118</td>
-                            <td>jane@microsoft.com</td>
-                            <td>United States</td>
-                            <td><div className="status">Inactive</div></td>
-                        </tr>
-                        <tr>
-                            <td>Jane Cooper</td>
-                            <td>Microsoft</td>
-                            <td>(225) 555-0118</td>
-                            <td>jane@microsoft.com</td>
-                            <td>United States</td>
-                            <td><div className="status">Inactive</div></td>
-                        </tr>
-                        <tr>
-                            <td>Jane Cooper</td>
-                            <td>Microsoft</td>
-                            <td>(225) 555-0118</td>
-                            <td>jane@microsoft.com</td>
-                            <td>United States</td>
-                            <td><div className="status">Inactive</div></td>
-                        </tr>
-                        <tr>
-                            <td>Jane Cooper</td>
-                            <td>Microsoft</td>
-                            <td>(225) 555-0118</td>
-                            <td>jane@microsoft.com</td>
-                            <td>United States</td>
-                            <td><div className="status active">Active</div></td>
-                        </tr>
-                    </tbody>
-                </table> */}
+                <TableData data={data}/>
                 <div className="window__result-pagination-wrapper">
                     <div className="window__show-results">Showing data <span>1</span> to <span>8</span> of <span>256K</span> entries</div>
-                    <Pagination/>
+                    <Pagination pag={pag} setPag={setPag} current={current} setCurrent={setCurrent} pagsize={pagsize} setPagsize={setPagsize} maxCountData={maxCountData} setMaxCountData={setMaxCountData}/>
                 </div>
             </div>
         </div>

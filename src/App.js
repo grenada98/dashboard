@@ -6,8 +6,8 @@ import { useEffect, useState} from 'react';
 function App() {
   const [sideMenu, setSideMenu] = useState(false);
   const [category, setCategory] = useState("Customers");
-  useEffect(()=>{
 
+  useEffect(()=>{
   }, [sideMenu]);
   return (
     <div className="App">
