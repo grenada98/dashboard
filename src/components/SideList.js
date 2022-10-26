@@ -31,7 +31,7 @@ export const SideList = (props) => {
         <div className='sidemenu__menu'>
             {
                 categoryMenu.map((item, i) =>(
-                    <div key={i} className='sidemenu__menu-item' onClick={e => onHandle(e, item)}>
+                    <div key={i} className={props.category==item? 'sidemenu__menu-item active': 'sidemenu__menu-item'} onClick={e => onHandle(e, item)}>
                         {svgIcon[item]}
                         <span className='sidemenu__text'>{item}</span>
                     </div>

@@ -12,7 +12,7 @@ export const Sidemenu = (props) => {
                     </a>
                     <Burger sideMenu={props.sideMenu} setSideMenu={props.setSideMenu} />
                 </div>
-                <SideList setCategory={props.setCategory}/>
+                <SideList setCategory={props.setCategory} category={props.category}/>
             </div>
             <a className='sidemenu__user-profile'>
                 <div className='sidemenu__user-photo'>
