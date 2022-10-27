@@ -12,21 +12,6 @@ export const MainWindow = (props) => {
     const [maxCountData, setMaxCountData] = useState(12);
     const [data, setData] = useState([]);
     useEffect(()=>{
-        const url = `https://dummyjson.com/users?limit=8`;
-    
-        const fetchData = async () => {
-            try {
-                const response = await fetch(url);
-                const json = await response.json();
-                setData([...json.users]);
-            } catch (error) {
-                console.log("error", error);
-            }
-        };
-    
-        fetchData();
-      }, [])
-    useEffect(()=>{
         const url = `https://dummyjson.com/users?limit=${pagsize}&skip=${8*current}`;
 
         const fetchData = async () => {
@@ -34,6 +19,7 @@ export const MainWindow = (props) => {
                 const response = await fetch(url);
                 const json = await response.json();
                 setData([...json.users]);
+                console.log(json.users);
             } catch (error) {
                 console.log("error", error);
             }
