@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Burger } from "./Burger";
 import { SideList } from './SideList';
 
