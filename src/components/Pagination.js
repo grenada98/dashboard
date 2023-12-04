@@ -59,15 +59,15 @@ export const Pagination = (props) => {
     }
     return(
         <div className="window__pagination">
-            <button className={leftActive? "window__pagination-button-prev active": "window__pagination-button-prev"} onClick={()=> {paginationHandleLeft()}}>
+            <button className={`window__pagination-button-prev ${leftActive? "active": ""}`} onClick={()=> {paginationHandleLeft()}}>
                 <Arrow className="window__arrow-left"/>
             </button>
             {
                 props.pag.map((item, i)=>{
-                    return <button key={i} className={item==props.current?"window__pagination-button active": "window__pagination-button"} onClick={(e)=>{setActive(e)}}>{item}</button>
+                    return <button key={i} className={`window__pagination-button ${item==props.current? "active": ""}`} onClick={(e)=>{setActive(e)}}>{item}</button>
                 })
             }
-            <button className={rightActive? "window__pagination-button-next active": "window__pagination-button-next"} onClick={()=>{paginationHandleRight()}}>
+            <button className={`window__pagination-button-next ${rightActive? "active": ""}`} onClick={()=>{paginationHandleRight()}}>
                 <Arrow className="window__arrow-right"/>
             </button>
         </div>

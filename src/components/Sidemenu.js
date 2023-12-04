@@ -4,11 +4,11 @@ import { SideList } from './SideList';
 
 export const Sidemenu = (props) => {
     return(
-        <div className={props.sideMenu? 'sidemenu active': 'sidemenu'}>
+        <div className={`sidemenu ${props.sideMenu? "active": ""}`}>
             <div className='sidemenu__menu-content'>
                 <div className='sidemenu__header'>
                     <a className='sidemenu__logo'>
-                        <img src={process.env.PUBLIC_URL + '/img/logo.png'} alt='logo'></img>
+                        <img className="sidemenu__logo-img" src={process.env.PUBLIC_URL + '/img/logo.png'} alt='logo'></img>
                     </a>
                     <Burger sideMenu={props.sideMenu} setSideMenu={props.setSideMenu} />
                 </div>

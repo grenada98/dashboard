@@ -2,6 +2,7 @@ import React, { useEffect} from "react";
 import {ReactComponent as Dashboard} from '../category_1.svg';
 import {ReactComponent as Product} from '../category_2.svg';
 import {ReactComponent as Customers} from '../category_3.svg';
+import {ReactComponent as RightArrow} from '../chevron-right.svg'
 
 export const SideList = (props) => {
     function onHandle(e, item){
@@ -23,9 +24,12 @@ export const SideList = (props) => {
         <div className='sidemenu__menu'>
             {
                 categoryMenu.map((item, i) =>(
-                    <div key={i} className={props.category==item.toLowerCase() ? 'sidemenu__menu-item active': 'sidemenu__menu-item'} onClick={e => onHandle(e, item)}>
-                        {svgIcon[item]}
-                        <span className='sidemenu__text'>{item}</span>
+                    <div key={i} className={`sidemenu__menu-item ${props.category==item.toLowerCase() ? 'active': ''}`} onClick={e => onHandle(e, item)}>
+                        <div className="sidemenu__button-title">
+                            {svgIcon[item]}
+                            <span className='sidemenu__text'>{item}</span>
+                        </div>
+                        <RightArrow className='sidemenu__img arrow' width='16' height='16'/>
                     </div>
                 ))
             }

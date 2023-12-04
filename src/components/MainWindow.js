@@ -11,6 +11,7 @@ export const MainWindow = (props) => {
     const [current, setCurrent] = useState(1);
     const [pagsize, setPagsize] = useState(pag.length);
     const [maxCountData, setMaxCountData] = useState();
+    const [maxData, setMaxData] = useState(0);
     const [data, setData] = useState([]);
     const [block, setBlock] = useState(false);
     useEffect(()=>{
@@ -20,6 +21,7 @@ export const MainWindow = (props) => {
                 const response = await fetch(url_info);
                 const json = await response.json();
                 setMaxCountData(Math.ceil(json.total/8));
+                setMaxData(json.total);
                 Math.ceil(json.total/8)>8 ? setPag([...maxPagCount]) : setPag([...maxPagCount.slice(0,  Math.ceil(json.total/8))])
                 setCurrent(1)
             } catch (error) {
@@ -50,24 +52,23 @@ export const MainWindow = (props) => {
                 <Burger sideMenu={props.sideMenu} setSideMenu={props.setSideMenu}/>
                 <div className="hello-user">Hello <span>Evano</span> 👋🏼,</div>
             </div>
-            <div className="hello-information">API data is from <a target="_blank" href="https://dummyjson.com/">https://dummyjson.com/</a></div>
             <div className="window-wrapper">
-                <div className={block? "main-window-blocked active": "main-window-blocked"}>
+                <div className={`main-window-blocked ${block? 'active': ''}`}>
                     <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                 </div>
                 <div className="window-header__wrapper">
                     <div className="window-header__wrapper-title">
                         <div className='window-header__title'>All {props.category}</div>
-                        <div className="window-header__subtitle">Active members</div>
+                        <div className="window-header__subtitle">Active Members</div>
                     </div>
                     <div className="window-header__search">
                         <Search className="search-icon" width='24' height='24'/>
-                        <input placeholder="Search"></input>
+                        <input className="window-header__input" placeholder="Search"></input>
                     </div>
                 </div>
                 <TableData data={data} category={props.category}/>
                 <div className="window__result-pagination-wrapper">
-                    <div className="window__show-results">Showing data <span>1</span> to <span>8</span> of <span>256K</span> entries</div>
+                    <div className="window__show-results">Showing data {8*current - 8 + 1} to {8*current - 8 + 8} of {maxData} entries</div>
                     <Pagination pag={pag} setPag={setPag} current={current} setCurrent={setCurrent} pagsize={pagsize} setPagsize={setPagsize} maxCountData={maxCountData} setMaxCountData={setMaxCountData}/>
                 </div>
             </div>
