@@ -4,11 +4,15 @@ import {ReactComponent as Arrow} from "../arrow.svg";
 export const Pagination = (props) => {
     useEffect(()=>{
     }, [props.pag, props.current]);
+    const [leftActive, setLeftActive] = useState(false);
+    const [rightActive, setRightActive] = useState(true);
     function paginationHandleRight(){
         if(props.current===props.maxCountData){
             props.setCurrent(props.current);
+            setRightActive(false)
         }
         else{
+            setRightActive(true)
             if(props.pag[props.pag.length - 1]<props.current + 1){
                 props.setPag(props.pag.map((item)=>(item + props.pagsize)).filter((item)=>item <= props.maxCountData));
                 props.setCurrent(props.current + 1);
@@ -22,8 +26,10 @@ export const Pagination = (props) => {
     function paginationHandleLeft(){
         if(props.current===1){
             props.setCurrent(props.current);
+            setLeftActive(false)
         }
         else{
+            setLeftActive(true)
             if(props.pag[0]>props.current - 1){
                 if(props.pagsize==props.pag.length){
                     props.setPag(props.pag.map((item)=>(item - props.pagsize)));
@@ -53,7 +59,7 @@ export const Pagination = (props) => {
     }
     return(
         <div className="window__pagination">
-            <button className="window__pagination-button-prev" onClick={()=> {paginationHandleLeft()}}>
+            <button className={leftActive? "window__pagination-button-prev active": "window__pagination-button-prev"} onClick={()=> {paginationHandleLeft()}}>
                 <Arrow className="window__arrow-left"/>
             </button>
             {
@@ -61,7 +67,7 @@ export const Pagination = (props) => {
                     return <button key={i} className={item==props.current?"window__pagination-button active": "window__pagination-button"} onClick={(e)=>{setActive(e)}}>{item}</button>
                 })
             }
-            <button className="window__pagination-button-next" onClick={()=>{paginationHandleRight()}}>
+            <button className={rightActive? "window__pagination-button-next active": "window__pagination-button-next"} onClick={()=>{paginationHandleRight()}}>
                 <Arrow className="window__arrow-right"/>
             </button>
         </div>

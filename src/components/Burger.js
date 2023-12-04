@@ -5,7 +5,7 @@ export const Burger = (props) => {
         props.sideMenu == true? props.setSideMenu(false): props.setSideMenu(true);
     }
     return(
-        <div className={props.sideMenu == true? "burger active": "burger"} onClick={openSide}>
+        <div className={`burger ${props.sideMenu == true? 'active': ''}`} onClick={openSide}>
             <div className="burger__middle-line"></div>
         </div>
     )

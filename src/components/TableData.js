@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 
 export const TableData = (props) => {
-    useEffect(()=>{
-    }, [props.category, props.data])
     const tableHeaderData = {
         carts: ["Title", "Price", "Quantity", "Total"],
         products: ["Title", "Brand", "Price", "Category", "Stock"],
@@ -63,44 +61,7 @@ export const TableData = (props) => {
                         )
                 })
                 }
-                {/* {props.data.map((item, i) =>{
-                    console.log("Данные с апи ", item)
-                    // console.log(props.category)
-                    return(
-                        <Tr key={i}>
-                            {tableData[props.category.toLowerCase()].map((elem, j) => {
-                                console.log("Данные построчно ", elem)
-                                return(
-                                    <React.Fragment key={j}>
-                                        <Td>{item[elem.toLowerCase()]}</Td>
-                                    </React.Fragment>
-                                )
-                            })}
-                        </Tr>
-                    )
-                })} */}
             </Tbody>
         </Table>
     )
 }
-
-
-
-
-
-
-
-
-
-                {/* {props.data.map((item) =>{
-                    return(
-                        <Tr key={item['id']}>
-                        <Td>{item['firstName']}</Td>
-                        <Td>{item['company']['name']}</Td>
-                        <Td>{item['phone']}</Td>
-                        <Td>{item['email']}</Td>
-                        <Td>{item['address']['city']}</Td>
-                        <Td><div className={item['gender'] == "male" ? "status" :"status active" }>{item['gender'] == "male" ? "Inactive" :"Active"}</div></Td>
-                    </Tr> 
-                    )
-                })} */}

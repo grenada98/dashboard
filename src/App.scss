@@ -460,6 +460,14 @@ body{
       }
     }
   }
+  &__pagination-button-prev,
+  &__pagination-button-next{
+    opacity: 0.5;
+  }
+  &__pagination-button-prev.active,
+  &__pagination-button-next.active{
+    opacity: 1;
+  }
   &__pagination-button-next{
     margin-right: 0;
   }

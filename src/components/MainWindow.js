@@ -50,7 +50,7 @@ export const MainWindow = (props) => {
                 <Burger sideMenu={props.sideMenu} setSideMenu={props.setSideMenu}/>
                 <div className="hello-user">Hello <span>Evano</span> 👋🏼,</div>
             </div>
-            <div className="hello-information">API data from <a target="_blank" href="https://dummyjson.com/">https://dummyjson.com/</a></div>
+            <div className="hello-information">API data is from <a target="_blank" href="https://dummyjson.com/">https://dummyjson.com/</a></div>
             <div className="window-wrapper">
                 <div className={block? "main-window-blocked active": "main-window-blocked"}>
                     <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
