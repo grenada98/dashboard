@@ -1,10 +1,18 @@
-import React, {useContext} from 'react';
+import React, {useEffect, useRef} from 'react';
 import { Burger } from "./Burger";
 import { SideList } from './SideList';
+import {useClickOutside} from './useClickOutside';
 
 export const Sidemenu = (props) => {
+    const modalRef = useRef()
+
+    useClickOutside(modalRef, props.setSideMenu)
+
+    useEffect(()=>{
+        props.setInputValue("")
+    }, [props.category])
     return(
-        <div className={`sidemenu ${props.sideMenu? "active": ""}`}>
+        <div ref={modalRef} className={`sidemenu ${props.sideMenu? "active": ""}`}>
             <div className='sidemenu__menu-content'>
                 <div className='sidemenu__header'>
                     <a className='sidemenu__logo'>

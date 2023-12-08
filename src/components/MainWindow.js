@@ -1,77 +1,67 @@
-import React, {useState, useEffect} from "react";
-import { ReactComponent as Search } from "../search.svg";
+import React, {useState, useEffect, useRef} from "react";
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { Burger } from "./Burger";
-import { Pagination } from "./Pagination";
-import { TableData } from "./TableData";
+import { useClickOutside } from "./useClickOutside";
+import { InputSearch } from "./InputSearch";
+import { Route, Routes } from 'react-router-dom';
+import {CartsTable} from '../components/TableComponents/CartsTable';
+import {ProductsTable} from '../components/TableComponents/ProductsTable';
+import {UsersTable} from '../components/TableComponents/UsersTable'
 
 export const MainWindow = (props) => {
-    const maxPagCount = [1, 2, 3, 4, 5, 6, 7, 8];
-    const [pag, setPag] = useState([...maxPagCount]);
-    const [current, setCurrent] = useState(1);
-    const [pagsize, setPagsize] = useState(pag.length);
-    const [maxCountData, setMaxCountData] = useState();
-    const [maxData, setMaxData] = useState(0);
-    const [data, setData] = useState([]);
     const [block, setBlock] = useState(false);
+
+    const [paginationSettings, setPaginationSettings] = useState(
+        {
+            elemSizePerPage: 8,
+            maxCountPages: null,
+            maxCountOfData: null,
+            data: [],
+            currentData: []
+        }
+    )
+    const wrapperRef = useRef();
+    useClickOutside(wrapperRef)
+
     useEffect(()=>{
-        const url_info = `https://dummyjson.com/${props.category.toLowerCase()}`;
-        const fetchData_info = async () => {
-            try {
-                const response = await fetch(url_info);
-                const json = await response.json();
-                setMaxCountData(Math.ceil(json.total/8));
-                setMaxData(json.total);
-                Math.ceil(json.total/8)>8 ? setPag([...maxPagCount]) : setPag([...maxPagCount.slice(0,  Math.ceil(json.total/8))])
-                setCurrent(1)
-            } catch (error) {
-                console.log("error", error);
-            }
-        };
-        fetchData_info();
-    }, [props.category])
-    useEffect(()=>{
-        const url = `https://dummyjson.com/${props.category.toLowerCase()}?limit=${pagsize}&skip=${8*current - 8}`;
+        const url = `https://dummyjson.com/${props.category.toLowerCase()}`;
         const fetchData = async () => {
             try {
                 setBlock(true);
                 const response = await fetch(url);
                 const json = await response.json();
-                setData([...json[props.category.toLowerCase()]]);
                 setBlock(false);
+                setPaginationSettings({
+                    ...paginationSettings,
+                    maxCountPages: Math.ceil(json.total/8),
+                    maxCountOfData: json.total,
+                    data: [...json[props.category.toLowerCase()]]
+
+                })
             } catch (error) {
                 console.log("error", error);
             }
         };
 
         fetchData();
-    }, [props.category, current])
+    }, [props.category])
+    useEffect(()=>{
+        paginationSettings.currentData.map((elem)=>{
+            console.log(elem)
+        })
+    }, [paginationSettings])
     return(
         <div className="main-wrapper">
             <div className="header">
                 <Burger sideMenu={props.sideMenu} setSideMenu={props.setSideMenu}/>
                 <div className="hello-user">Hello <span>Evano</span> 👋🏼,</div>
+                <Routes>
+                    <Route path="/Carts" element={<CartsTable category={props.category} paginationSettings={paginationSettings} setPaginationSettings={setPaginationSettings} block={block}/>}></Route>
+                    <Route path="/Products" element={<ProductsTable category={props.category} paginationSettings={paginationSettings} setPaginationSettings={setPaginationSettings} block={block}/>}></Route>
+                    <Route path="/Users" element={<UsersTable category={props.category} paginationSettings={paginationSettings} setPaginationSettings={setPaginationSettings} block={block}/>}></Route>
+                </Routes>
             </div>
-            <div className="window-wrapper">
-                <div className={`main-window-blocked ${block? 'active': ''}`}>
-                    <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-                </div>
-                <div className="window-header__wrapper">
-                    <div className="window-header__wrapper-title">
-                        <div className='window-header__title'>All {props.category}</div>
-                        <div className="window-header__subtitle">Active Members</div>
-                    </div>
-                    <div className="window-header__search">
-                        <Search className="search-icon" width='24' height='24'/>
-                        <input className="window-header__input" placeholder="Search"></input>
-                    </div>
-                </div>
-                <TableData data={data} category={props.category}/>
-                <div className="window__result-pagination-wrapper">
-                    <div className="window__show-results">Showing data {8*current - 8 + 1} to {8*current - 8 + 8} of {maxData} entries</div>
-                    <Pagination pag={pag} setPag={setPag} current={current} setCurrent={setCurrent} pagsize={pagsize} setPagsize={setPagsize} maxCountData={maxCountData} setMaxCountData={setMaxCountData}/>
-                </div>
-            </div>
+            
         </div>
     )
 }
