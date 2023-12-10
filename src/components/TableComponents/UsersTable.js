@@ -1,13 +1,30 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import { Table, Thead, Tbody, Th, Tr, Td } from 'react-super-responsive-table';
 import { InputSearch } from "../InputSearch";
 import { PaginatedItems } from "../PaginatedItems";
+import { fetchData } from "../../utils/fetchData";
 
 export const UsersTable = (props) => {
+    const [block, setBlock] = useState(false);
+    const [data, setData] = useState([]);
+    const [pagination, setPagination] = useState({ currentPage: 1, perPage: 8, totalPages: Math.ceil(data.length/8)})
+    let startIndex = (pagination.currentPage - 1) * pagination.perPage;
+    let endIndex = startIndex + pagination.perPage;
+    const currentData = data.slice(startIndex, endIndex)
+    let totalpages = Math.ceil(data.length/8);
+    useEffect(()=>{
+        setBlock(true)
+        fetchData("Users").then((data)=>{
+            setData([...data])
+        }).finally(()=>setBlock(false))
+      }, [props.category])
+    useEffect(()=>{
+        console.log("Выбрано с " + startIndex + " по " + endIndex + ". Выбранная страница " + pagination.currentPage)
+    }, [pagination])
     const tableHeaderData = ["Customer Name", "Company", "Phone Number", "Email", "City", "Status"]
     return(
         <div className="window-wrapper">
-            <div className={props.block? "main-window-blocked active": "main-window-blocked"}>
+            <div className={`main-window-blocked ${block? 'active' : null}`}>
                 <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
 
@@ -26,10 +43,11 @@ export const UsersTable = (props) => {
                     })}
                 </Tr>
             </Thead>
+            {currentData.length?
             <Tbody>
-                {   props.paginationSettings.data.map((elem, index) =>{
+                {   currentData.map((elem) =>{
                         return(
-                            <Tr key={index}>
+                            <Tr key={elem['id']}>
                                 <Td>{elem['firstName']}</Td>
                                 <Td>{elem?.['company']?.['name']}</Td>
                                 <Td>{elem['phone']}</Td>
@@ -40,12 +58,12 @@ export const UsersTable = (props) => {
                         )
                 })
                 }
-            </Tbody>
+            </Tbody>: null}
         </Table>
         <div className="window__result-pagination-wrapper">
                 <div className="window__show-results">Showing data <span>1</span> to <span>8</span> of <span>256K</span> entries</div>
                 {/* <Pagination pag={pag} setPag={setPag} current={current} setCurrent={setCurrent} pagsize={pagsize} setPagsize={setPagsize} maxCountPages={maxCountPages} setMaxCountPages={setMaxCountPages}/> */}
-                <PaginatedItems paginationSettings={props.paginationSettings} setPaginationSettings={props.setPaginationSettings}/>
+                <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination} totalpages={totalpages}/>
         </div>
     </div>
     )
