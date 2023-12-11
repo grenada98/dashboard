@@ -1,7 +1,9 @@
 import React, {useEffect, useRef} from 'react';
 import { Burger } from "./Burger";
 import { SideList } from './SideList';
+import { NavLink, Route, Routes } from 'react-router-dom';
 import {useClickOutside} from './useClickOutside';
+import { Logo } from './Logo';
 
 export const Sidemenu = (props) => {
     const modalRef = useRef()
@@ -15,9 +17,9 @@ export const Sidemenu = (props) => {
         <div ref={modalRef} className={`sidemenu ${props.sideMenu? "active": ""}`}>
             <div className='sidemenu__menu-content'>
                 <div className='sidemenu__header'>
-                    <a className='sidemenu__logo'>
-                        <img className="sidemenu__logo-img" src={process.env.PUBLIC_URL + '/img/logo.png'} alt='logo'></img>
-                    </a>
+                    <NavLink to="/">
+                        <Logo/>
+                    </NavLink>
                     <Burger sideMenu={props.sideMenu} setSideMenu={props.setSideMenu} />
                 </div>
                 <SideList setCategory={props.setCategory} category={props.category}/>
