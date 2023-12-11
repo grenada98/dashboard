@@ -7,19 +7,19 @@ import { fetchData } from "../../utils/fetchData";
 export const CartsTable = (props) => {
     const [block, setBlock] = useState(false);
     const [data, setData] = useState([]);
+    const [dataTotal, setDataTotal] = useState(0);
     const [pagination, setPagination] = useState({ currentPage: 1, perPage: 8, totalPages: 0})
     let startIndex = (pagination.currentPage - 1) * pagination.perPage;
     let endIndex = startIndex + pagination.perPage;
-    const currentData = data.slice(startIndex, endIndex)
     useEffect(()=>{
         setBlock(true)
-        fetchData("Carts").then((data)=>{
-            setData([...data])
+        fetchData("Carts", startIndex).then((data)=>{
+            setData([...data.data])
+            setPagination({...pagination, totalPages: Math.ceil(data.total/pagination.perPage)})
+            setDataTotal(data.total);
+            console.log(data.total)
         }).finally(()=>setBlock(false))
-      }, [props.category])
-    useEffect(()=>{
-        setPagination({...pagination, totalPages: Math.ceil(data.length/8)})
-    }, [data])
+      }, [props.category, startIndex])
     const tableHeaderData = ["Title", "Price", "Quantity", "Stock"]
     return(
         <div className="main__container">
@@ -42,9 +42,9 @@ export const CartsTable = (props) => {
                     })}
                 </Tr>
             </Thead>
-            {currentData.length?
+            {data.length?
             <Tbody>
-                {   currentData.map((elem) =>{
+                {   data.map((elem) =>{
                         return(
                             <Tr key={elem['id']}>
                                 <Td className='carts'>{elem?.['products']?.[1]['title']}</Td>
@@ -58,7 +58,7 @@ export const CartsTable = (props) => {
             </Tbody> : null}
         </Table>: null}
         <div className="main__result-pagination-wrapper">
-                <div className="main__show-results">Showing data {startIndex+1} to {endIndex > data.length ? data.length : endIndex} of {data.length} entries</div>
+                <div className="main__show-results">Showing data {startIndex+1} to {endIndex > dataTotal ? dataTotal : endIndex} of {dataTotal} entries</div>
                 <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination}/>
         </div>
     </div>
