@@ -463,7 +463,12 @@ input{
       &.users{
         &:nth-child(4){
           @media(max-width: 1200px){
-            width: 10%;
+            max-width: 170px;
+            word-wrap: break-word;
+          }
+          @media(max-width: 1200px){
+            max-width:none;
+            word-wrap:normal;
           }
         }
       }

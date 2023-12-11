@@ -11,11 +11,7 @@ function App() {
   const [category, setCategory] = useState("");
   useEffect(()=>{
     setSideMenu(false)
-    console.log("Меняется категория")
   }, [category])
-  useEffect(()=>{
-    console.log("Меню закрывается/открывается " + sideMenu)
-  }, [sideMenu])
   const [inputValue, setInputValue] = useState("");
   return (
     <Router>
