@@ -13,10 +13,6 @@ export const MainWindow = (props) => {
     const wrapperRef = useRef();
     useClickOutside(wrapperRef)
 
-
-    useEffect(()=>{
-        console.log(props.category)
-    })
     return(
         <div className="main-wrapper">
             <div className="header">

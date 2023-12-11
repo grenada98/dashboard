@@ -1,7 +1,7 @@
 import './App.scss';
 import {Sidemenu} from './components/Sidemenu';
 import {MainWindow} from './components/MainWindow';
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
@@ -9,6 +9,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
   const [sideMenu, setSideMenu] = useState(false);
   const [category, setCategory] = useState("Carts");
+  useEffect(()=>{
+    setSideMenu(false)
+    console.log("Меняется категория")
+  }, [category])
+  useEffect(()=>{
+    console.log("Меню закрывается/открывается " + sideMenu)
+  }, [sideMenu])
   const [inputValue, setInputValue] = useState("");
   return (
     <Router>

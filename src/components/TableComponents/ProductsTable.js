@@ -11,7 +11,6 @@ export const ProductsTable = (props) => {
     let startIndex = (pagination.currentPage - 1) * pagination.perPage;
     let endIndex = startIndex + pagination.perPage;
     const currentData = data.slice(startIndex, endIndex)
-    let totalpages = Math.ceil(data.length/8);
     useEffect(()=>{
         setBlock(true)
         fetchData("Products").then((data)=>{
@@ -48,11 +47,11 @@ export const ProductsTable = (props) => {
                     {   currentData.map((elem) =>{
                             return(
                                 <Tr key={elem['id']}>
-                                    <Td>{elem['title']}</Td>
-                                    <Td>{elem['brand']}</Td>
-                                    <Td>{elem['price']}</Td>
-                                    <Td>{elem['category']}</Td>
-                                    <Td>{elem['stock']}</Td>
+                                    <Td className="products">{elem['title']}</Td>
+                                    <Td className="products">{elem['brand']}</Td>
+                                    <Td className="products">{elem['price']}</Td>
+                                    <Td className="products">{elem['category']}</Td>
+                                    <Td className="products">{elem['stock']}</Td>
                                 </Tr>
                             )
                     })
@@ -61,8 +60,7 @@ export const ProductsTable = (props) => {
             </Table>: null}
             <div className="window__result-pagination-wrapper">
                     <div className="window__show-results">Showing data {startIndex} to {endIndex > data.length ? data.length : endIndex} of {data.length} entries</div>
-                    {/* <Pagination pag={pag} setPag={setPag} current={current} setCurrent={setCurrent} pagsize={pagsize} setPagsize={setPagsize} maxCountPages={maxCountPages} setMaxCountPages={setMaxCountPages}/> */}
-                    <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination} totalpages={totalpages}/>
+                    <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination}/>
                 </div>
             </div>
     )

@@ -11,7 +11,6 @@ export const CartsTable = (props) => {
     let startIndex = (pagination.currentPage - 1) * pagination.perPage;
     let endIndex = startIndex + pagination.perPage;
     const currentData = data.slice(startIndex, endIndex)
-    let totalpages = Math.ceil(data.length/8);
     useEffect(()=>{
         setBlock(true)
         fetchData("Carts").then((data)=>{
@@ -48,10 +47,10 @@ export const CartsTable = (props) => {
                 {   currentData.map((elem) =>{
                         return(
                             <Tr key={elem['id']}>
-                                <Td>{elem?.['products']?.[1]['title']}</Td>
-                                <Td>{elem?.['products']?.[1]['price']}</Td>
-                                <Td>{elem?.['products']?.[1]['quantity']}</Td>
-                                <Td>{elem?.['products']?.[1]['total']}</Td>
+                                <Td className='carts'>{elem?.['products']?.[1]['title']}</Td>
+                                <Td className="carts">{elem?.['products']?.[1]['price']}</Td>
+                                <Td className="carts">{elem?.['products']?.[1]['quantity']}</Td>
+                                <Td className="carts">{elem?.['products']?.[1]['total']}</Td>
                             </Tr>
                         )
                 })
@@ -60,7 +59,7 @@ export const CartsTable = (props) => {
         </Table>: null}
         <div className="window__result-pagination-wrapper">
                 <div className="window__show-results">Showing data {startIndex} to {endIndex > data.length ? data.length : endIndex} of {data.length} entries</div>
-                <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination} totalpages={totalpages}/>
+                <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination}/>
         </div>
     </div>
     )

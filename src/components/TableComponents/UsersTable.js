@@ -11,7 +11,6 @@ export const UsersTable = (props) => {
     let startIndex = (pagination.currentPage - 1) * pagination.perPage;
     let endIndex = startIndex + pagination.perPage;
     const currentData = data.slice(startIndex, endIndex)
-    let totalpages = Math.ceil(data.length/8);
     useEffect(()=>{
         setBlock(true)
         fetchData("Users").then((data)=>{
@@ -35,7 +34,7 @@ export const UsersTable = (props) => {
                 </div>
                 <InputSearch/>
             </div>
-            <Table withbasestyles={{breakpoint: '45em'}}  className="window__information-table">
+            <Table withbasestyles={{breakpoint: '100em'}}  className="window__information-table">
             <Thead>
                 <Tr className="window__information-table-header">
                     {tableHeaderData.map((item, i)=>{
@@ -48,12 +47,12 @@ export const UsersTable = (props) => {
                 {   currentData.map((elem) =>{
                         return(
                             <Tr key={elem['id']}>
-                                <Td>{elem['firstName']}</Td>
-                                <Td>{elem?.['company']?.['name']}</Td>
-                                <Td>{elem['phone']}</Td>
-                                <Td>{elem['email']}</Td>
-                                <Td>{elem?.['address']?.['city']}</Td>
-                                <Td><div className={elem['gender'] == "male" ? "status" :"status active" }>{elem['gender'] == "male" ? "Inactive" :"Active"}</div></Td>
+                                <Td className="users">{elem['firstName']}</Td>
+                                <Td className="users">{elem?.['company']?.['name']}</Td>
+                                <Td className="users">{elem['phone']}</Td>
+                                <Td className="users">{elem['email']}</Td>
+                                <Td className="users">{elem?.['address']?.['city']}</Td>
+                                <Td className="users"><div className={elem['gender'] == "male" ? "status" :"status active" }>{elem['gender'] == "male" ? "Inactive" :"Active"}</div></Td>
                             </Tr>
                         )
                 })
@@ -62,8 +61,7 @@ export const UsersTable = (props) => {
         </Table>
         <div className="window__result-pagination-wrapper">
                 <div className="window__show-results">Showing data {startIndex} to {endIndex > data.length ? data.length : endIndex} of {data.length} entries</div>
-                {/* <Pagination pag={pag} setPag={setPag} current={current} setCurrent={setCurrent} pagsize={pagsize} setPagsize={setPagsize} maxCountPages={maxCountPages} setMaxCountPages={setMaxCountPages}/> */}
-                <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination} totalpages={totalpages}/>
+                <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination}/>
         </div>
     </div>
     )
