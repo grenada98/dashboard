@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   const [sideMenu, setSideMenu] = useState(false);
-  const [category, setCategory] = useState("Carts");
+  const [category, setCategory] = useState("");
   useEffect(()=>{
     setSideMenu(false)
     console.log("Меняется категория")
