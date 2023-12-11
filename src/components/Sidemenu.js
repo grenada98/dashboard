@@ -10,9 +10,6 @@ export const Sidemenu = (props) => {
 
     useClickOutside(modalRef, props.setSideMenu)
 
-    useEffect(()=>{
-        props.setInputValue("")
-    }, [props.category])
     return(
         <div ref={modalRef} className={`sidemenu ${props.sideMenu? "active": ""}`}>
             <div className='sidemenu__menu-content'>

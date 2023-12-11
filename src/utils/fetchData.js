@@ -4,7 +4,6 @@ export const fetchData = async (category) => {
     try {
         const response = await fetch(url);
         const json = await response.json();
-        console.log([...json[category.toLowerCase()]])
         return [...json[category.toLowerCase()]]
 
     } catch (error) {

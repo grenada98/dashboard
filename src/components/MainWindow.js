@@ -14,18 +14,15 @@ export const MainWindow = (props) => {
     useClickOutside(wrapperRef)
 
     return(
-        <div className="main-wrapper">
-            <div className="header">
-                <Burger sideMenu={props.sideMenu} setSideMenu={props.setSideMenu}/>
-                <div className="hello-user">Hello <span>Evano</span> 👋🏼,</div>
-                <Routes>
-                    <Route path="/" element={<Dashboard/>}></Route>
-                    <Route path="/Carts" element={<CartsTable category={props.category}/>}></Route>
-                    <Route path="/Products" element={<ProductsTable category={props.category}/>}></Route>
-                    <Route path="/Users" element={<UsersTable category={props.category}/>}></Route>
-                </Routes>
-            </div>
-            
+        <div className="main__wrapper">
+            <Burger sideMenu={props.sideMenu} setSideMenu={props.setSideMenu}/>
+            <div className="hello-user">Hello <span>Evano</span> 👋🏼,</div>
+            <Routes>
+                <Route path="/" element={<Dashboard/>}></Route>
+                <Route path="/Carts" element={<CartsTable category={props.category}/>}></Route>
+                <Route path="/Products" element={<ProductsTable category={props.category}/>}></Route>
+                <Route path="/Users" element={<UsersTable category={props.category}/>}></Route>
+            </Routes>
         </div>
     )
 }

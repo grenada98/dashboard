@@ -22,21 +22,21 @@ export const ProductsTable = (props) => {
     }, [data])
     const tableHeaderData = ["Title", "Price", "Quantity", "Total", "Stock"]
     return(
-        <div className="window-wrapper">
-                <div className={block? "main-window-blocked active": "main-window-blocked"}>
+        <div className="main__container">
+                <div className={`main__container-blocked ${block? 'active': ''}`}>
                     <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                 </div>
 
-                <div className="window-header__wrapper">
-                    <div className="window-header__wrapper-title">
-                        <div className='window-header__title'>All {props.category}</div>
-                        <div className="window-header__subtitle">Active members</div>
+                <div className="main__header-wrapper">
+                    <div className="main__header-title-container">
+                        <div className='main__header-title'>All {props.category}</div>
+                        <div className="main__header-subtitle">Active members</div>
                     </div>
                     <InputSearch/>
                 </div>
-                {data.length? <Table withbasestyles={{breakpoint: '45em'}}  className="window__information-table">
+                {data.length? <Table withbasestyles={{breakpoint: '45em'}}  className="main__information-table">
                 <Thead>
-                    <Tr className="window__information-table-header">
+                    <Tr className="main__information-table-header">
                         {tableHeaderData.map((item, i)=>{
                             return (<Th key={i}>{item}</Th>)
                         })}
@@ -58,8 +58,8 @@ export const ProductsTable = (props) => {
                     }
                 </Tbody>: null}
             </Table>: null}
-            <div className="window__result-pagination-wrapper">
-                    <div className="window__show-results">Showing data {startIndex} to {endIndex > data.length ? data.length : endIndex} of {data.length} entries</div>
+            <div className="main__result-pagination-wrapper">
+                    <div className="main__show-results">Showing data {startIndex+1} to {endIndex > data.length ? data.length : endIndex} of {data.length} entries</div>
                     <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination}/>
                 </div>
             </div>

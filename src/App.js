@@ -12,13 +12,12 @@ function App() {
   useEffect(()=>{
     setSideMenu(false)
   }, [category])
-  const [inputValue, setInputValue] = useState("");
   return (
     <Router>
       <div className="App">
         <div className={`blocking ${sideMenu?"active": ""}`}></div>
-        <Sidemenu inputValue={inputValue} setInputValue={setInputValue} category={category} setCategory={setCategory} sideMenu={sideMenu} setSideMenu={setSideMenu}/>
-        <MainWindow inputValue={inputValue} setInputValue={setInputValue} category={category} setCategory={setCategory} sideMenu={sideMenu} setSideMenu={setSideMenu}/>
+        <Sidemenu category={category} setCategory={setCategory} sideMenu={sideMenu} setSideMenu={setSideMenu}/>
+        <MainWindow category={category} setCategory={setCategory} sideMenu={sideMenu} setSideMenu={setSideMenu}/>
       </div>
     </Router>
   );
