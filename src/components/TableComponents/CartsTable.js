@@ -7,7 +7,7 @@ import { fetchData } from "../../utils/fetchData";
 export const CartsTable = (props) => {
     const [block, setBlock] = useState(false);
     const [data, setData] = useState([]);
-    const [pagination, setPagination] = useState({ currentPage: 1, perPage: 8, totalPages: Math.ceil(data.length/8)})
+    const [pagination, setPagination] = useState({ currentPage: 1, perPage: 8, totalPages: 0})
     let startIndex = (pagination.currentPage - 1) * pagination.perPage;
     let endIndex = startIndex + pagination.perPage;
     const currentData = data.slice(startIndex, endIndex)
@@ -19,8 +19,8 @@ export const CartsTable = (props) => {
         }).finally(()=>setBlock(false))
       }, [props.category])
     useEffect(()=>{
-        console.log("Выбрано с " + startIndex + " по " + endIndex + ". Выбранная страница " + pagination.currentPage)
-    }, [pagination])
+        setPagination({...pagination, totalPages: Math.ceil(data.length/8)})
+    }, [data])
     const tableHeaderData = ["Title", "Price", "Quantity", "Stock"]
     return(
         <div className="window-wrapper">
@@ -46,8 +46,6 @@ export const CartsTable = (props) => {
             {currentData.length?
             <Tbody>
                 {   currentData.map((elem) =>{
-                        // console.log(props.paginationSettings.currentData.length)
-                        // console.log(elem)
                         return(
                             <Tr key={elem['id']}>
                                 <Td>{elem?.['products']?.[1]['title']}</Td>
@@ -61,7 +59,7 @@ export const CartsTable = (props) => {
             </Tbody> : null}
         </Table>: null}
         <div className="window__result-pagination-wrapper">
-                <div className="window__show-results">Showing data <span>1</span> to <span>8</span> of <span>256K</span> entries</div>
+                <div className="window__show-results">Showing data {startIndex} to {endIndex > data.length ? data.length : endIndex} of {data.length} entries</div>
                 <PaginatedItems category={props.category} pagination={pagination} setPagination={setPagination} totalpages={totalpages}/>
         </div>
     </div>

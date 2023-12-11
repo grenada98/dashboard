@@ -8,14 +8,14 @@ export const PaginatedItems = (props) => {
   };
 
   return (
-    <>
+    <div className="pagination__wrapper">
       <ReactPaginate
-        nextLabel="next >"
+        nextLabel={<div><Arrow/></div>}
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         marginPagesDisplayed={2}
-        pageCount={props.totalpages}
-        previousLabel="< previous"
+        pageCount={props.pagination.totalPages}
+        previousLabel={<Arrow/>}
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"
@@ -29,6 +29,6 @@ export const PaginatedItems = (props) => {
         activeClassName="active"
         renderOnZeroPageCount={null}
       />
-    </>
+    </div>
   );
 }
